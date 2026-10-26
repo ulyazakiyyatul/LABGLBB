@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import "./globals.css";
+import Navbar from "@/components/navbar";
+export const metadata: Metadata = { title: "LABGLBB | Laboratorium Gerak Digital", description: "Laboratorium fisika digital untuk tracking gerak dan analisis kinematika." };
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="id"><body><Navbar/><main>{children}</main><footer style={{borderTop:"1px solid var(--border)",marginTop:60,padding:"26px 0",background:"#fff"}}><div className="container" style={{display:"flex",justifyContent:"space-between",gap:12,flexWrap:"wrap",fontSize:13}}><strong>LABGLBB</strong><span className="muted">Laboratorium gerak digital · Belajar fisika berbasis data</span><span className="muted">© {new Date().getFullYear()} LABGLBB</span></div></footer></body></html>}
