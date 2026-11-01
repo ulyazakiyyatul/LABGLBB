@@ -1,2 +1,35 @@
-import {redirect} from "next/navigation";import Link from "next/link";import {getSession} from "@/lib/session";import {Box,Move3D,Construction} from "lucide-react";
-export default async function Lab3D(){const user=await getSession();if(!user)redirect("/login");return <section className="section"><div className="container"><span className="eyebrow">Ruang simulasi</span><h1 className="page-title" style={{marginTop:14}}>Lab 3D</h1><p className="muted" style={{lineHeight:1.7,maxWidth:720}}>Ruang awal untuk simulasi gerak tiga dimensi. Modul simulasi interaktif belum diimplementasikan; halaman ini menjadi fondasi untuk iterasi berikutnya.</p><div className="panel" style={{padding:28,marginTop:24,background:"linear-gradient(135deg,#f2fbff,#f4fff0)"}}><div style={{width:64,height:64,display:"grid",placeItems:"center",borderRadius:18,background:"#d9f5ff",color:"#117cab"}}><Box size={32}/></div><h2 style={{fontSize:25,margin:"18px 0 8px"}}>Simulasi 3D sedang disiapkan</h2><p className="muted" style={{maxWidth:650,lineHeight:1.7}}>Rencana pengembangan: visualisasi sumbu X, Y, Z; kontrol posisi dan kecepatan awal; gravitasi; lintasan partikel; serta sinkronisasi data simulasi dengan grafik kinematika.</p><div className="grid-cards" style={{marginTop:20}}>{[{icon:Move3D,title:"Ruang 3D",text:"Sumbu koordinat dan kamera interaktif"},{icon:Construction,title:"Parameter",text:"Kontrol kondisi awal dan gaya"},{icon:Box,title:"Sinkronisasi",text:"Lintasan dan grafik terhubung"}].map(({icon:Icon,title,text})=><div key={title} style={{padding:16,borderRadius:14,background:"rgba(255,255,255,.85)"}}><Icon size={22} color="#168dcc"/><h3 style={{margin:"10px 0 5px",fontSize:16}}>{title}</h3><p className="muted" style={{fontSize:13,margin:0,lineHeight:1.5}}>{text}</p></div>)}</div><Link className="btn btn-primary" style={{marginTop:22}} href="/tracking">Gunakan tracking webcam</Link></div></div></section>}
+import { redirect } from "next/navigation";
+import { Box, Move3D, SlidersHorizontal } from "lucide-react";
+import { getSession } from "@/lib/session";
+import Lab3DSimulator from "@/components/lab-3d-simulator";
+
+export default async function Lab3D() {
+  const user = await getSession();
+  if (!user) redirect("/login");
+
+  return (
+    <section className="section">
+      <div className="container">
+        <span className="eyebrow">Laboratorium simulasi</span>
+        <h1 className="page-title" style={{ marginTop: 14 }}>Lab 3D</h1>
+        <p className="muted" style={{ lineHeight: 1.7, maxWidth: 780 }}>
+          Eksplorasi gerak benda dalam ruang tiga dimensi. Atur kecepatan awal, sudut, arah, ketinggian, dan gravitasi untuk mengamati perubahan lintasan.
+        </p>
+        <div className="grid-cards" style={{ marginTop: 20 }}>
+          {[
+            { icon: Box, title: "Ruang koordinat", text: "Amati komponen posisi pada sumbu X, Y, dan Z." },
+            { icon: SlidersHorizontal, title: "Parameter gerak", text: "Ubah kondisi awal dan gravitasi secara langsung." },
+            { icon: Move3D, title: "Lintasan interaktif", text: "Jalankan, jeda, dan ulangi simulasi." },
+          ].map(({ icon: Icon, title, text }) => (
+            <div className="panel" key={title} style={{ padding: 18 }}>
+              <Icon size={23} color="#168dcc" />
+              <h2 style={{ fontSize: 16, margin: "10px 0 5px" }}>{title}</h2>
+              <p className="muted" style={{ fontSize: 13, margin: 0, lineHeight: 1.5 }}>{text}</p>
+            </div>
+          ))}
+        </div>
+        <Lab3DSimulator />
+      </div>
+    </section>
+  );
+}
